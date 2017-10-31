@@ -16,7 +16,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <elasticsearch.version>5.6.1</elasticsearch.version>
+        <elasticsearch.version>5.6.3</elasticsearch.version>
         <elasticsearch.assembly.descriptor>${project.basedir}/src/main/assemblies/plugin.xml</elasticsearch.assembly.descriptor>
         <elasticsearch.plugin.name>analysis-encyclor</elasticsearch.plugin.name>
         <elasticsearch.plugin.classname>com.youmingdot.elasticsearch.plugin.encyclor.EncyclorPlugin</elasticsearch.plugin.classname>
