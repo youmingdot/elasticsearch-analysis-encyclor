@@ -1,0 +1,15 @@
+# OS or Editor files
+._*
+.DS_Store
+Thumbs.db
+.idea
+*.iml
+.project
+.settings
+.tmproj
+*.sublime-project
+*.sublime-workspace
+nbproject
+
+# Output
+/target
