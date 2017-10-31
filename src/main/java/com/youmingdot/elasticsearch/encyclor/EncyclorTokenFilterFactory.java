@@ -19,17 +19,20 @@ import org.elasticsearch.index.analysis.AbstractTokenFilterFactory;
  */
 public class EncyclorTokenFilterFactory extends AbstractTokenFilterFactory {
 
-    private final EncyclorConfiguration configuration;
+    private final Settings settings;
 
-    private final Analyzer analyzer;
+    private final Environment environment;
+
+    private EncyclorConfiguration configuration;
+
+    private SynonymDictionary dictionary;
 
     public EncyclorTokenFilterFactory(IndexSettings indexSettings, Environment environment, String name,
             Settings settings) {
         super(indexSettings, name, settings);
 
-        configuration = new EncyclorConfiguration(settings, environment);
-
-        analyzer = createTokenAnalyzer(configuration);
+        this.settings = settings;
+        this.environment = environment;
     }
 
     public static EncyclorTokenFilterFactory getEncyclorTokenFilterFactory(IndexSettings indexSettings,
@@ -39,9 +42,19 @@ public class EncyclorTokenFilterFactory extends AbstractTokenFilterFactory {
 
     @Override
     public TokenStream create(TokenStream tokenStream) {
-        SynonymDictionary dictionary = SynonymDictionaryFactory.createSynonymDictionary(configuration, analyzer);
+        prepare();
+
+
 
         return new EncyclorTokenFilter(tokenStream, dictionary, configuration);
+    }
+
+    private void prepare() {
+        if (configuration == null) {
+            configuration = new EncyclorConfiguration(settings, environment);
+            dictionary = SynonymDictionaryFactory.createSynonymDictionary(configuration,
+                    createTokenAnalyzer(configuration));
+        }
     }
 
     private Analyzer createTokenAnalyzer(EncyclorConfiguration configuration) {
